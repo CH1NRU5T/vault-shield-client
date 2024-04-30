@@ -1,0 +1,22 @@
+PODS:
+  - fast_rsa (0.6.0):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - fast_rsa (from `.symlinks/plugins/fast_rsa/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  fast_rsa:
+    :path: ".symlinks/plugins/fast_rsa/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  fast_rsa: 8caf8e4b6038320ff4ab420f0deff14e505ae8cb
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.14.3
