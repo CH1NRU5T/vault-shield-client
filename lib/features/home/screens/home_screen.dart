@@ -9,11 +9,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(
-      child: Watch((context) {
-        final user = userSignal.value;
-        return Text(user?.name ?? 'No user');
-      }),
-    ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Watch(
+            (context) => Text('Welcome, ${userSignal.value?.name ?? 'User'}')),
+      ),
+      body: Center(
+        child: Watch((context) {
+          final user = userSignal.value;
+          return Text(user?.name ?? 'No user');
+        }),
+      ),
+    );
   }
 }

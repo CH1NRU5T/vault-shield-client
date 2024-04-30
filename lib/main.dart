@@ -27,12 +27,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vault Shield',
-      theme: ThemeData.dark(
-
-              // ),
-              )
-          .copyWith(
+      theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppPallete.backgroundColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppPallete.backgroundColor,
+          elevation: 0,
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+          centerTitle: true,
+        ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
