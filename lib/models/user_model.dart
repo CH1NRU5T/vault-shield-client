@@ -5,21 +5,29 @@ class User {
   final String name;
   final String email;
   final String token;
+  final String? publicKey;
+  final String? privateKey;
   User({
     required this.name,
     required this.email,
     required this.token,
+    this.publicKey,
+    this.privateKey,
   });
 
   User copyWith({
     String? name,
     String? email,
     String? token,
+    String? publicKey,
+    String? privateKey,
   }) {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
       token: token ?? this.token,
+      publicKey: publicKey ?? this.publicKey,
+      privateKey: privateKey ?? this.privateKey,
     );
   }
 
@@ -28,6 +36,7 @@ class User {
       'name': name,
       'email': email,
       'token': token,
+      'publicKey': publicKey,
     };
   }
 

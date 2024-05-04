@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:client/base_client.dart';
 import 'package:client/features/auth/widgets/auth_text_field.dart';
 import 'package:client/models/user_model.dart';
@@ -25,6 +23,40 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+  }
+
+  void handleLogin() async {
+    try {
+      BaseClient response = await BaseClient.post(
+        data: {
+          'email': _emailController.text.trim(),
+          'password': _passwordController.text.trim(),
+        },
+        path: '/login',
+      );
+      if (response.success) {
+        debugPrint(response.data.toString());
+        User user = User.fromMap(response.data as Map<String, dynamic>);
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user', user.toJson());
+        userSignal.set(user);
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+        debugPrint(user.toString());
+      } else {
+        debugPrint(response.error.toString());
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.error!.toString()),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -66,35 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
-              onPressed: () async {
-                BaseClient response = await BaseClient.post(
-                  data: {
-                    'email': _emailController.text.trim(),
-                    'password': _passwordController.text.trim(),
-                  },
-                  path: '/login',
-                );
-                if (response.success) {
-                  debugPrint(response.data.toString());
-                  User user =
-                      User.fromMap(response.data as Map<String, dynamic>);
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.setString('user', user.toJson());
-                  userSignal.set(user);
-                  if (mounted) {
-                    Navigator.pushReplacementNamed(context, '/home');
-                  }
-                  debugPrint(user.toString());
-                } else {
-                  debugPrint(response.error.toString());
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(jsonDecode(response.error!)['error']),
-                    ),
-                  );
-                }
-              },
+              onPressed: handleLogin,
               child: const Text(
                 'Login',
                 style: TextStyle(

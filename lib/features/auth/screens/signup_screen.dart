@@ -28,7 +28,10 @@ class _SignupScreenState extends State<SignupScreen> {
     );
     if (response.success) {
       User user = User.fromMap(response.data as Map<String, dynamic>);
-      userSignal.set(user);
+      userSignal.set(user.copyWith(
+        privateKey: keypair.privateKey.toPEM(),
+        publicKey: keypair.publicKey.toPEM(),
+      ));
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/home');
       }
